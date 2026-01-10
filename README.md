@@ -30,37 +30,53 @@ Antes de iniciar, certifique-se de ter instalado:
 
 ## Criar o ambiente virtual (Python 3.11)
 
-'''python3.11 -m venv venv'''
+~~~
+python3.11 -m venv venv
+~~~
 
 ## Ativar o ambiente virtual
 
-'''source venv/bin/activate'''
+~~~
+source venv/bin/activate
+~~~
 
 Verifique se o Python correto está ativo:
 
-'''python --version'''
+~~~
+python --version
+~~~
 
 Saída esperada:
 
-'''Python 3.11.x'''
+~~~
+Python 3.11.x
+~~~
 
 ## Atualizar o pip
 
-'''pip install --upgrade pip'''
+~~~
+pip install --upgrade pip
+~~~
 
 ## Instalar as dependências do projeto
 
-'''pip install -r requirements.txt'''
+~~~
+pip install -r requirements.txt
+~~~
 
 ## Executando o Projeto
 
 Com o ambiente virtual ativado, execute o servidor FastAPI com:
 
-'''uvicorn app.main:app --reload'''
+~~~
+uvicorn app.main:app --reload
+~~~
 
 ## Dependências do Sistema (Linux)
 
 Algumas dependências do Coqui TTS exigem bibliotecas adicionais do sistema.
 Execute o comando abaixo antes ou caso ocorra erro na instalação:
 
-'''sudo apt install -y build-essential libsndfile1 ffmpeg'''
+~~~
+sudo apt install -y build-essential libsndfile1 ffmpeg
+~~~
