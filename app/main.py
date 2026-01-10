@@ -5,10 +5,19 @@ from app.core.state import state
 from TTS.api import TTS
 from app.core.queue import start_worker
 from app.core.config import OUTPUT_DIR
-from fastapi.responses import FileResponse
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.templating import Jinja2Templates
 
 app = FastAPI(title="VoiceForge")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 app.mount("/audios", StaticFiles(directory=OUTPUT_DIR), name="audios")
 app.mount("/frontend", StaticFiles(directory="app/frontend"), name="frontend")
 
@@ -28,6 +37,11 @@ def load_tts_model():
 
 app.include_router(tts.router)
 app.include_router(speakers.router)
+
+
+@app.get("/health")
+def health():
+    return {"status": "ok"}
 
 @app.get("/")
 def index(request: Request):
