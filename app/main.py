@@ -4,8 +4,11 @@ from app.routes import tts, speakers
 from app.core.state import state
 from TTS.api import TTS
 from app.core.queue import start_worker
+from fastapi.staticfiles import StaticFiles
+from app.core.config import OUTPUT_DIR
 
 app = FastAPI(title="VoiceForge")
+app.mount("/audios", StaticFiles(directory=OUTPUT_DIR), name="audios")
 
 @app.on_event("startup")
 def load_tts_model():
