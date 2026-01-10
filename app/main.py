@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.staticfiles import StaticFiles
 from app.routes import tts, speakers
 from app.core.state import state
@@ -6,10 +6,13 @@ from TTS.api import TTS
 from app.core.queue import start_worker
 from app.core.config import OUTPUT_DIR
 from fastapi.responses import FileResponse
+from fastapi.templating import Jinja2Templates
 
 app = FastAPI(title="VoiceForge")
 app.mount("/audios", StaticFiles(directory=OUTPUT_DIR), name="audios")
 app.mount("/frontend", StaticFiles(directory="app/frontend"), name="frontend")
+
+templates = Jinja2Templates(directory="app/frontend")
 
 @app.on_event("startup")
 def load_tts_model():
@@ -27,5 +30,23 @@ app.include_router(tts.router)
 app.include_router(speakers.router)
 
 @app.get("/")
-def home():
-    return FileResponse("app/frontend/index.html")
+def index(request: Request):
+    return templates.TemplateResponse(
+        "pages/generate.html",
+        {"request": request}
+    )
+
+@app.get("/speakers")
+def speakers(request: Request):
+    return templates.TemplateResponse(
+        "pages/speakers.html",
+        {"request": request}
+    )
+
+@app.get("/audios")
+def audios(request: Request):
+    return templates.TemplateResponse(
+        "pages/audios.html",
+        {"request": request}
+    )
+

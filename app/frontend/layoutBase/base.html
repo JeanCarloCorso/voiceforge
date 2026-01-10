@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+
+    <!-- CSS GLOBAL -->
+    <link rel="stylesheet" href="/frontend/css/global.css">
+
+    <!-- CSS ESPECÍFICO DA PÁGINA -->
+    {% if css %}
+    <link rel="stylesheet" href="/frontend/css/{{ css }}">
+    {% endif %}
+</head>
+
+<body>
+
+    <div class="page">
+
+        <header class="header">
+            <div class="header-container">
+                <div class="brand">
+                    <span class="logo">🎙️ VoiceForge</span>
+                </div>
+
+                <nav class="nav">
+                    <a href="/">Gerar</a>
+                    <a href="/audios">Áudios</a>
+                    <a href="/speakers">Speakers</a>
+                </nav>
+            </div>
+        </header>
+
+        <main class="main">
+            {% block content %}{% endblock %}
+        </main>
+
+        <footer class="footer">
+            © 2026 VoiceForge · Plataforma de geração de voz
+        </footer>
+
+    </div>
+
+    {% block js %}{% endblock %}
+</body>
+
+</html>

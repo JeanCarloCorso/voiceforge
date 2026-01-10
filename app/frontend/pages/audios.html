@@ -1,0 +1,17 @@
+{% extends "layoutBase/base.html" %}
+
+{% set title = "Áudios" %}
+{% set css = "audios.css" %}
+
+{% block content %}
+<div class="container">
+    <div class="card">
+        <h2>Áudios Gerados</h2>
+        <ul id="lista" class="audio-list"></ul>
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+<script type="module" src="/frontend/js/audios.js"></script>
+{% endblock %}

@@ -1,3 +1,5 @@
+import os
+from app.core.config import OUTPUT_DIR
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 from app.services.tts_service import gerar_audio, listar_speakers
@@ -50,3 +52,7 @@ def status(task_id: str):
         "audio": task.audio_file,
         "error": task.error
     }
+
+@router.get("/audios")
+def listar_audios():
+    return sorted(os.listdir(OUTPUT_DIR))

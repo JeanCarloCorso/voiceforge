@@ -1,0 +1,24 @@
+{% extends "layoutBase/base.html" %}
+
+{% set title = "Speakers" %}
+{% set css = "speakers.css" %}
+
+{% block content %}
+<div class="container">
+    <div class="card speaker-card">
+        <h2>Upload de Speaker</h2>
+        <p style="color: #64748B; font-size: 0.85rem; text-align: center; margin-top: -15px;">
+            Selecione um arquivo .wav para treinar a voz
+        </p>
+
+        <input type="file" id="file" accept=".wav">
+        <button id="upload">Enviar Áudio</button>
+
+        <p id="msg"></p>
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+<script type="module" src="/frontend/js/speakers.js"></script>
+{% endblock %}

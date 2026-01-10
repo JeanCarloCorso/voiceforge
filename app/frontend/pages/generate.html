@@ -1,0 +1,39 @@
+{% extends "layoutBase/base.html" %}
+
+{% set title = "Gerar Áudio" %}
+{% set css = "generate.css" %}
+
+{% block content %}
+<div class="container">
+    <div class="card generate-card">
+        <h2>Gerar Áudio</h2>
+
+        <div class="input-group" style="display: flex; flex-direction: column; gap: 8px;">
+            <label style="color: #94A3B8; font-size: 0.85rem; font-weight: 500;">Texto para conversão</label>
+            <textarea id="texto" placeholder="Ex: Olá, este é um teste de voz com VoiceForge..."></textarea>
+        </div>
+
+        <div class="input-group" style="display: flex; flex-direction: column; gap: 8px;">
+            <label style="color: #94A3B8; font-size: 0.85rem; font-weight: 500;">Voz do Speaker</label>
+            <select id="speaker"></select>
+        </div>
+
+        <button id="gerar">Gerar novo áudio</button>
+
+        <div class="progress" id="progress-container">
+            <div id="bar"></div>
+        </div>
+
+        <audio id="player" controls></audio>
+        <div id="status-msg"
+            style="color: #38BDF8; font-size: 0.8rem; text-align: center; display: none; margin-bottom: -10px;">
+            Gerando o seu áudio...
+        </div>
+    </div>
+
+</div>
+{% endblock %}
+
+{% block js %}
+<script type="module" src="/frontend/js/generate.js"></script>
+{% endblock %}

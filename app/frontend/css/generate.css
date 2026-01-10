@@ -1,0 +1,136 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 160px);
+    padding: 20px;
+}
+
+.generate-card {
+    background: #0F172A;
+    border: 1px solid #1E293B;
+    border-radius: 16px;
+    padding: 32px;
+    width: 100%;
+    max-width: 600px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.generate-card h2 {
+    color: #F8FAFC;
+    margin: 0;
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+/* Campos de entrada */
+textarea, select {
+    background: #020617;
+    border: 1px solid #334155;
+    border-radius: 10px;
+    padding: 14px;
+    color: #F1F5F9;
+    font-family: inherit;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+textarea:focus, select:focus {
+    outline: none;
+    border-color: #38BDF8;
+    box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.1);
+}
+
+/* Botão e Estados */
+#gerar {
+    background: #38BDF8;
+    color: #020617;
+    border: none;
+    padding: 14px;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: all 0.2s;
+}
+
+#gerar:hover:not(:disabled) {
+    background: #7DD3FC;
+    transform: translateY(-2px);
+}
+
+#gerar:disabled {
+    background: #1E293B;
+    color: #64748B;
+    cursor: not-allowed;
+}
+
+/* Progress Bar */
+.progress {
+    background: #020617;
+    height: 10px;
+    border-radius: 20px;
+    overflow: hidden;
+    display: none; /* Controlado pelo JS */
+}
+
+#bar {
+    background: linear-gradient(90deg, #38BDF8, #818CF8);
+    height: 100%;
+    width: 0%;
+    transition: width 0.4s ease;
+}
+
+/* Status Message */
+#status-msg {
+    margin-top: -10px;
+    font-weight: 500;
+    text-align: center;
+    transition: color 0.3s ease; 
+    font-size: 0.9rem;
+}
+
+/* Audio Player */
+#player {
+    width: 100%;
+    filter: invert(100%) hue-rotate(180deg) brightness(1.5);
+    display: none;
+}
+
+/* --- ANIMAÇÕES --- */
+
+/* Spinner do Botão */
+.spinner {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border: 3px solid rgba(2, 6, 23, 0.2);
+    border-top-color: #020617; /* Escuro para contrastar com o botão azul */
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin-right: 10px;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Pulso na barra quando ativa */
+@keyframes pulse {
+    0% { opacity: 0.7; }
+    50% { opacity: 1; }
+    100% { opacity: 0.7; }
+}
+
+.progress.active {
+    display: block;
+    animation: pulse 1.5s infinite;
+}
