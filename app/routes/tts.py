@@ -1,6 +1,7 @@
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 from app.services.tts_service import gerar_audio, listar_speakers
+from app.core.queue import task_queue
 
 router = APIRouter(prefix="/tts", tags=["TTS"])
 
@@ -14,8 +15,12 @@ def speakers():
 
 @router.post("/generate")
 def generate(req: TTSRequest):
-    try:
-        audio = gerar_audio(req.texto, req.speaker)
-        return {"audio": audio}
-    except Exception as e:
-        raise HTTPException(status_code=400, detail=str(e))
+    task_queue.put({
+        "texto": req.texto,
+        "speaker": req.speaker
+    })
+
+    return {
+        "status": "queued",
+        "message": "Áudio adicionado à fila de geração"
+    }

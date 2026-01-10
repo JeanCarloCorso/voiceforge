@@ -1,14 +1,7 @@
 from datetime import datetime
 import os
-from TTS.api import TTS
 from app.core.config import SPEAKERS_DIR, OUTPUT_DIR
-
-print("📥 Carregando modelo XTTS (pode demorar)...")
-
-tts = TTS(
-    model_name="tts_models/multilingual/multi-dataset/xtts_v2",
-    gpu=False
-)
+from app.core.state import state
 
 def listar_speakers() -> list[str]:
     return [
@@ -20,6 +13,9 @@ def gerar_audio(texto: str, speaker: str) -> str:
     if not texto.strip():
         raise ValueError("Texto não pode ser vazio")
 
+    if state.tts_model is None:
+        raise RuntimeError("Modelo TTS não carregado")
+
     speaker_path = os.path.join(SPEAKERS_DIR, speaker)
 
     if not os.path.exists(speaker_path):
@@ -28,7 +24,7 @@ def gerar_audio(texto: str, speaker: str) -> str:
     filename = f"audio_{datetime.now().strftime('%Y%m%d_%H%M%S')}.wav"
     output_path = os.path.join(OUTPUT_DIR, filename)
 
-    tts.tts_to_file(
+    state.tts_model.tts_to_file(
         text=texto,
         speaker_wav=speaker_path,
         file_path=output_path,
