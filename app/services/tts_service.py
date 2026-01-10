@@ -2,6 +2,7 @@ from datetime import datetime
 import os
 from app.core.config import SPEAKERS_DIR, OUTPUT_DIR
 from app.core.state import state
+from app.services.tts_pipeline import generate_tts_pipeline
 
 def listar_speakers() -> list[str]:
     return [
@@ -9,7 +10,7 @@ def listar_speakers() -> list[str]:
         if f.lower().endswith(".wav")
     ]
 
-def gerar_audio(texto: str, speaker: str) -> str:
+def gerar_audio(texto: str, speaker: str, mode="natural") -> str:
     if not texto.strip():
         raise ValueError("Texto não pode ser vazio")
 
@@ -21,14 +22,12 @@ def gerar_audio(texto: str, speaker: str) -> str:
     if not os.path.exists(speaker_path):
         raise FileNotFoundError("Speaker não encontrado")
 
-    filename = f"audio_{datetime.now().strftime('%Y%m%d_%H%M%S')}.wav"
-    output_path = os.path.join(OUTPUT_DIR, filename)
-
-    state.tts_model.tts_to_file(
-        text=texto,
+    filename = generate_tts_pipeline(
+        tts_model=state.tts_model,
+        texto=texto,
         speaker_wav=speaker_path,
-        file_path=output_path,
-        language="pt"
+        output_dir=OUTPUT_DIR,
+        mode=mode
     )
 
     return filename
