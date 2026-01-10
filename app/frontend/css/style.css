@@ -1,0 +1,47 @@
+body {
+    background: #0f172a;
+    color: #e5e7eb;
+    font-family: Arial, sans-serif;
+    padding: 40px;
+}
+
+.container {
+    max-width: 600px;
+    margin: auto;
+}
+
+h1 {
+    margin-bottom: 20px;
+}
+
+textarea,
+select,
+button {
+    width: 100%;
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 6px;
+    border: none;
+    font-size: 14px;
+}
+
+button {
+    background: #2563eb;
+    color: white;
+    cursor: pointer;
+}
+
+button:disabled {
+    background: #475569;
+}
+
+.status {
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+audio {
+    width: 100%;
+    margin-top: 20px;
+    display: none;
+}
