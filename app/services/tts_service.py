@@ -10,7 +10,7 @@ def listar_speakers() -> list[str]:
         if f.lower().endswith(".wav")
     ]
 
-def gerar_audio(texto: str, speaker: str, mode="natural") -> str:
+def gerar_audio(texto: str, speaker: str) -> str:
     if not texto.strip():
         raise ValueError("Texto não pode ser vazio")
 
@@ -26,8 +26,7 @@ def gerar_audio(texto: str, speaker: str, mode="natural") -> str:
         tts_model=state.tts_model,
         texto=texto,
         speaker_wav=speaker_path,
-        output_dir=OUTPUT_DIR,
-        mode=mode
+        output_dir=OUTPUT_DIR
     )
 
     return filename

@@ -1,8 +1,7 @@
 import os
 import uuid
 import subprocess
-from app.services.preprocess_text import preprocess_text
-from app.services.text_splitter import split_text
+from app.services.emotion_segmenter import split_by_emotion
 from app.services.voice_presets import get_voice_preset
 from app.services.audio_postprocess import postprocess_audio
 
@@ -11,22 +10,20 @@ def generate_tts_pipeline(
     tts_model,
     texto,
     speaker_wav,
-    output_dir,
-    mode="natural"
+    output_dir
 ):
-    texto = preprocess_text(texto)
-    chunks = split_text(texto)
-
-    preset = get_voice_preset(mode)
+    segments = split_by_emotion(texto)
     temp_files = []
 
-    for chunk in chunks:
+    for seg in segments:
         temp_path = os.path.join(
-            output_dir, f"_chunk_{uuid.uuid4()}.wav"
+            output_dir, f"_seg_{uuid.uuid4()}.wav"
         )
 
+        preset = get_voice_preset(seg["emotion"])
+
         tts_model.tts_to_file(
-            text=chunk,
+            text=seg["text"],
             speaker_wav=speaker_wav,
             file_path=temp_path,
             language="pt",
@@ -41,17 +38,17 @@ def generate_tts_pipeline(
         output_dir, file_name
     )
 
-    concat_cmd = ["ffmpeg", "-y"]
+    cmd = ["ffmpeg", "-y"]
     for f in temp_files:
-        concat_cmd += ["-i", f]
+        cmd += ["-i", f]
 
-    concat_cmd += [
+    cmd += [
         "-filter_complex",
         f"concat=n={len(temp_files)}:v=0:a=1",
         final_path
     ]
 
-    subprocess.run(concat_cmd, check=True)
+    subprocess.run(cmd, check=True)
 
     for f in temp_files:
         os.remove(f)
